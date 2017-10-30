@@ -46,20 +46,21 @@ Notitia
       
         var lol = variable[1].slice(3)
 var ll = lol.slice(0,lol.length-12)
-var array = ll.split("],[");    
-      document.getElementById("infor").innerHTML= ha
+var array = ll;  //.split("],[");    
+    localStorage.setItem("chart", array)
+    var charter = localStorage.getItem("chart")
+      //document.getElementById("infor").innerHTML= charter
 ////////////////
 
   </script>
     <script>
       //start D3.JS => the variable array has  arrays of the different surveys. The 0 spot has the name of the 
       // The following of each is the names of categories. Still need numbers.
-   var variable = document.cookie.split(";");
-    var parsed = variable[0].split("=")
-            var lol = variable[1].slice(3)
-var ll = lol.slice(0,lol.length-12)
-var array = ll.split("],[");    
-                  const dataset = [400, 31, 22, 17, 25, 18, 29, 14, 9];
+           var charter = localStorage.getItem("chart")
+           var charted = charter.split("],[");
+            var dataset =[]
+      charted.forEach(function(x){ dataset.push([x])})
+                  //const dataset = [400, 31, 22, 17, 25, 18, 29, 14, 9];
     
       function go(){
 
@@ -225,7 +226,7 @@ var Change = React.createClass({
         {this.state.inputCount.map((x,i)=>{
           return(
             <div>
-              <p className="white">Option {i+1}</p><input key ={i}ref = {i} name = "count"></input>
+              <p className="white">Option {i+1}</p><input key={i.toString()} ref = {i} name = "count"></input>
             </div>
           )}
        )}

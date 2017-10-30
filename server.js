@@ -1,4 +1,3 @@
-
 var express = require('express');
 var bodyParser = require('body-parser')
 var mongo = require('mongodb')
@@ -101,7 +100,18 @@ app.post("/changePass", function(req,res){
 app.post("/submitForm", function(req,res){
   var newData = req.body.count
   newData.unshift(req.body.surveyTitle)
-  user.newChart(newData,req.cookies.user);
+  
+  var dataObject ={
+    title: newData[0]
+  }
+  
+ newData.forEach(function(x,i){
+   if(i>0){
+   dataObject[newData[i]] = 0;
+   }
+ });
+  console.log(dataObject)
+  user.newChart(dataObject,req.cookies.user);
 
   res.redirect("/dashboard")
 });
