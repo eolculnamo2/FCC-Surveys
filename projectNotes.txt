@@ -1,0 +1,16 @@
+
+Static
+1. Currently Basic. Will style towards end. Do not take short cuts on the full stack projects. Make it look nice.
+2. I'm not happy with the current look. The end product must look competitive.
+
+User Authen
+1. Using Cookies to communicate with pages. It'll be a pain in the ass, but its really just a matter of parsing.
+2. Edit password needs to check for current password.
+
+Graphs:
+1. Use d3 (maybe d3 with react?)
+2. Parse cookie data in order to get info for graphs. Must keep in mind that unauthenticated users must be able to view graph so must find a way to display(perhaps with url? :/str)
+3. Must ensure that there is only one vote per IP address.
+
+Latest Updates: 
+1. Successfully stored survey data in cookies.
