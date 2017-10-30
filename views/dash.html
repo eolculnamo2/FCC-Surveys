@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Glitch!</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+   </head>
+  <body>
+    
+<div class = "container" id = "userBox">
+  <span class ="white" id = "name">
+  </span>
+    <span class ="white" id = "infor">
+  </span>
+  <center>
+  <h1 class="white" id = "as">
+Notitia  
+  </h1>
+  <h3 class="white">
+    Make and Take Surveys
+  </h3>
+  </center>
+
+<div id = "userData">
+</div>
+</div>
+    <center>
+    <div id = "graph">
+    </div>
+    </center>
+
+    <script src="https://d3js.org/d3.v4.js"></script>
+  <script>
+    var variable = document.cookie.split(";");
+    var parsed = variable[0].split("=")
+    document.getElementById("name").innerHTML=parsed[1]
+
+      
+        var lol = variable[1].slice(3)
+var ll = lol.slice(0,lol.length-12)
+var array = ll.split("],[");    
+      document.getElementById("infor").innerHTML= ha
+////////////////
+
+  </script>
+    <script>
+      //start D3.JS => the variable array has  arrays of the different surveys. The 0 spot has the name of the 
+      // The following of each is the names of categories. Still need numbers.
+   var variable = document.cookie.split(";");
+    var parsed = variable[0].split("=")
+            var lol = variable[1].slice(3)
+var ll = lol.slice(0,lol.length-12)
+var array = ll.split("],[");    
+                  const dataset = [400, 31, 22, 17, 25, 18, 29, 14, 9];
+    
+      function go(){
+
+var canvas =d3.select("#graph")
+        .append("svg")
+        .attr("width", 500)
+        .attr("height",500)
+ var bars = canvas.selectAll("rect")
+  .data(dataset)
+    .enter()
+     .append("rect")
+      .attr("height",(d)=>{
+      return 40
+    })
+      .attr("width",(d)=>{
+      return d
+    })
+      .attr("y", function(d,i){
+    return i*30;
+  })
+      .attr("fill", "blue")
+ 
+ var tett = canvas.selectAll("div")
+    .data(dataset)
+    .enter()
+     .append("div")
+           .text(()=>{return "hi"})
+    }
+
+      go();</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+
+    <script type="text/babel">  
+var Change = React.createClass({
+  getInitialState: function(){
+    return {viewSurvey: false, newSurvey: false,dash: true, changePass: false, inputCount: [0,0]}
+  },
+    viewSurveys: function(){
+    return(
+    <div>
+        <a href = "/logout">
+        <button className = "logoutBut">
+          Logout
+        </button>
+        </a>
+        <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: false,changePass: true, dash: false})}}className = "logoutBut">
+          Change Password
+        </button>
+        
+          <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: true,changePass: false, dash: false})}}className = "logoutBut">
+          New Survey
+        </button>
+      <button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
+          View Surveys
+        </button>
+        
+        </div>)
+  },
+  dash: function(){
+    return(<div>
+          <a href = "/logout">
+        <button className = "logoutBut">
+          Logout
+        </button>
+        </a>
+        <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: false,changePass: true, dash: false})}}className = "logoutBut">
+          Change Password
+        </button>
+        
+          <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: true,changePass: false, dash: false})}}className = "logoutBut">
+          New Survey
+        </button>
+      <button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
+          View Surveys
+        </button>
+        </div>)
+  },
+  changePass: function(){
+    return(
+    <div>
+        <div>
+         <a href = "/logout">
+        <button className = "logoutBut">
+          Logout
+        </button>
+        </a>
+        <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: false,changePass: true, dash: false})}}className = "logoutBut">
+          Change Password
+        </button>
+        
+          <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: true,changePass: false, dash: false})}}className = "logoutBut">
+          New Survey
+        </button>
+      <button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
+          View Surveys
+        </button>
+        </div><br/><br/><br/>
+      <center>  
+      <form method = "POST" action ="/changePass">
+        <h4 className="white"> Current Password</h4>
+        <input type = "password" name = "currentPassword">
+        </input>
+        <h4 className="white"> New Password</h4>
+        <input type = "password" name = "newPassword">
+        </input>
+        <h4 className="white"> Confirm New Password </h4>
+        <input type = "password" name = "confirmNewPassword">
+        </input>
+        <input type = "submit">
+        </input>
+      </form>
+        </center>
+      </div>)
+  },
+    add: function(){
+    if(this.state.inputCount.length < 5){
+    this.state.inputCount.push(0)
+    this.setState({inputCount: this.state.inputCount})
+    }
+    else{
+      alert("Maximum of 5 Options has been Reached")
+    }
+  },
+    remove: function(){
+    this.state.inputCount.pop()
+    this.setState({inputCount: this.state.inputCount})
+
+  },
+  options: function(){
+    return(
+    <div>
+           <a href = "/logout">
+        <button className = "logoutBut">
+          Logout
+        </button>
+        </a>
+        <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: false,changePass: true, dash: false})}}className = "logoutBut">
+          Change Password
+        </button>
+        
+          <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: true,changePass: false, dash: false})}}className = "logoutBut">
+          New Survey
+        </button>
+      <button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
+          View Surveys
+        </button>
+        <br/>
+          <br/>
+        <br/>
+        <br/>
+                <div className = "rows">
+          <div className = "col-md-2">
+          </div>
+          <div className = "col-md-2">
+        <h3 className="white">
+          Survey Title
+        </h3>
+            <form id="formData" method = "POST" action ="/submitForm">
+        <input name = "surveyTitle" placeholder = "Survey Name">
+        </input>
+        {this.state.inputCount.map((x,i)=>{
+          return(
+            <div>
+              <p className="white">Option {i+1}</p><input key ={i}ref = {i} name = "count"></input>
+            </div>
+          )}
+       )}
+            </form>
+          </div>
+        </div>
+        
+        <div className = "col-md-2">
+        </div>
+        
+        <div className = "col-md-2 buttonsMarginTop">
+          <button onClick = {this.add} className ="formButton">
+            Add Option
+          </button>
+          <button onClick = {this.remove} className ="formButton">
+            Remove Option
+          </button>
+          <button type ="submit" form = "formData" className ="formButton">
+            Finished!
+          </button>
+        </div>
+        
+        </div>)    
+  },
+  render: function(){
+    if(this.state.dash){
+      return this.dash();
+    }
+    if(this.state.changePass){
+      return this.changePass();
+    }
+    if(this.state.newSurvey){
+      return this.options();
+    }
+        if(this.state.viewSurveys){
+      return this.viewSurveys();
+    }
+  }
+})
+
+ReactDOM.render(
+  <div>
+    <Change/>
+  </div>,
+  document.getElementById("userData"))
+    </script>
+
+</body>
+</html>
