@@ -13,4 +13,5 @@ Graphs:
 3. Must ensure that there is only one vote per IP address.
 
 Latest Updates: 
-1. Successfully stored survey data in cookies.
+1. Successfully stored survey data in cookies..Json stringify to simplify code going into cookies, once pulled in JS was able to store in local storage.
+2. Updated from array to Object for chart data in order to adjust to polling. Need to relook at cookies and parsing.
