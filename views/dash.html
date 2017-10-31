@@ -39,23 +39,32 @@ Notitia
 
     <script src="https://d3js.org/d3.v4.js"></script>
   <script>
-    var variable = document.cookie.split(";");
+    var variable = document.cookie.split(";")
     var parsed = variable[0].split("=")
-    document.getElementById("name").innerHTML=parsed[1]
+     document.getElementById("name").innerHTML=parsed[1]
+    
+    
+    //Code to Parse Object from Cookie
+       // var variable = document.cookie.split(";")
+    var stepBarObjects = variable[1].split("=")
+    var barObjects = JSON.parse(stepBarObjects[0])
+     var title = Object.keys(barObjects[0])[0]   
+   
+          document.getElementById("infor").innerHTML= JSON.stringify(title);
+        //var lol = variable[1].slice(3)
+        var lol = JSON.parse(variable[1]);
+    console.log(lol)
 
-      
-        var lol = variable[1].slice(3)
 var ll = lol.slice(0,lol.length-12)
 var array = ll;  //.split("],[");    
     localStorage.setItem("chart", array)
-    var charter = localStorage.getItem("chart")
-      //document.getElementById("infor").innerHTML= charter
+   // var charter = localStorage.getItem("chart")
+     
 ////////////////
 
   </script>
     <script>
-      //start D3.JS => the variable array has  arrays of the different surveys. The 0 spot has the name of the 
-      // The following of each is the names of categories. Still need numbers.
+      //start D3.JS => //dataset comes from cookies assigned by the server
            var charter = localStorage.getItem("chart")
            var charted = charter.split("],[");
             var dataset =[]

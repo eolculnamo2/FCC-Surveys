@@ -10,7 +10,7 @@ module.exports = {
             db.collection('barCharts').update(
                                               {user: id},
                                               {$push: {chart: info}}, function(err,result){
-              console.log(res)
+        
             })
           });
     });

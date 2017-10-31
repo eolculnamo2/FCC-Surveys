@@ -17,9 +17,11 @@ input:focus {
 .welcomeState{
     margin-top: 8%;
 }
+#graph{
+background-color: white;}
 #userBox{
   width: 75%;
-  height: 90vh;
+  height: 100vh;
   margin-left: 10%;
   background-color: #294b82;
   border-radius: 5px;

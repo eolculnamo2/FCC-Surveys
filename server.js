@@ -18,8 +18,10 @@ app.use(session({secret:"asdflkj",
                 resave: true}));
 
 app.get("/", function (request, response) {
-
   response.sendFile(__dirname + '/views/index.html');
+});
+app.get("/mySurveys", function (request, response) {
+  response.sendFile(__dirname + '/views/myCharts.html');
 });
 app.get("/dashboard", function (request, response) {
   console.log(request.cookies)
