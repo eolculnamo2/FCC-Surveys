@@ -1,3 +1,5 @@
+Ideas:
+1. Random Button which will pull a random survey
 
 Static
 1. Currently Basic. Will style towards end. Do not take short cuts on the full stack projects. Make it look nice.
