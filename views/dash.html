@@ -18,8 +18,9 @@
 <div class = "container" id = "userBox">
   <span class ="white" id = "name">
   </span>
-    <span class ="white" id = "infor">
-  </span>
+
+
+
   <center>
   <h1 class="white" id = "as">
 Notitia  
@@ -50,7 +51,9 @@ Notitia
     var barObjects = JSON.parse(stepBarObjects[0])
      var title = Object.keys(barObjects[0])[0]   
    
+
           document.getElementById("infor").innerHTML= JSON.stringify(title);
+
         //var lol = variable[1].slice(3)
         var lol = JSON.parse(variable[1]);
     console.log(lol)
@@ -124,9 +127,11 @@ var Change = React.createClass({
           <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: true,changePass: false, dash: false})}}className = "logoutBut">
           New Survey
         </button>
-      <button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
+
+      <a href="/mySurveys"><button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
           View Surveys
-        </button>
+        </button></a>
+
         
         </div>)
   },
@@ -144,9 +149,10 @@ var Change = React.createClass({
           <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: true,changePass: false, dash: false})}}className = "logoutBut">
           New Survey
         </button>
-      <button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
+       <a href="/mySurveys"><button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
           View Surveys
-        </button>
+        </button></a>
+
         </div>)
   },
   changePass: function(){
@@ -165,9 +171,12 @@ var Change = React.createClass({
           <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: true,changePass: false, dash: false})}}className = "logoutBut">
           New Survey
         </button>
-      <button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
+
+      <a href="/mySurveys"><button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
           View Surveys
-        </button>
+        </button></a>
+
+
         </div><br/><br/><br/>
       <center>  
       <form method = "POST" action ="/changePass">
@@ -215,9 +224,11 @@ var Change = React.createClass({
           <button onClick = {()=>{this.setState({viewSurveys: false, newSurvey: true,changePass: false, dash: false})}}className = "logoutBut">
           New Survey
         </button>
-      <button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
+
+      <a href="/mySurveys"><button onClick = {()=>{this.setState({viewSurveys: true, newSurvey: false,changePass: false, dash: false})}}className = "logoutBut">
           View Surveys
-        </button>
+        </button></a>
+
         <br/>
           <br/>
         <br/>

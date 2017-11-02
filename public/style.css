@@ -11,6 +11,18 @@ input:focus {
     outline:none;
   box-shadow: 10px 10px 5px black;
   }
+
+  svg{
+    margin-top: 10%;
+    z-index:1;
+  }
+  rect:hover{
+    fill: #5a9164;
+  }
+.radios{
+box-shadow: 10px 10px 5px white !important;
+}
+
 .white{
   color: white;
 }
@@ -19,6 +31,11 @@ input:focus {
 }
 #graph{
 background-color: white;}
+
+#formOptions{
+  background-color: white;
+}
+
 #userBox{
   width: 75%;
   height: 100vh;

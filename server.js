@@ -1,3 +1,4 @@
+
 var express = require('express');
 var bodyParser = require('body-parser')
 var mongo = require('mongodb')
@@ -11,7 +12,7 @@ var url = "mongodb://eolculnamo2:ghost12@ds235785.mlab.com:35785/singletempo";
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser())
 app.use(session({secret:"asdflkj",
                 saveUninitialized: true,
@@ -21,6 +22,7 @@ app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
 app.get("/mySurveys", function (request, response) {
+  console.log(request.cookies[1])
   response.sendFile(__dirname + '/views/myCharts.html');
 });
 app.get("/dashboard", function (request, response) {
@@ -28,12 +30,17 @@ app.get("/dashboard", function (request, response) {
   response.sendFile(__dirname + '/views/dash.html');
 });
 app.get("/logout", function(req,res){
-  req.session.destroy();
+  user.logout(req.cookies.user,function(data){
+    //clears chart data cookies
+    res.clearCookie(JSON.stringify(data));
+    req.session.destroy();
   res.clearCookie("_id")
   res.clearCookie("user")
   res.clearCookie("password")
   res.clearCookie("chart")
   res.redirect("/")
+  })
+
 })
 
 
@@ -117,6 +124,23 @@ app.post("/submitForm", function(req,res){
 
   res.redirect("/dashboard")
 });
-var listener = app.listen(process.env.PORT, function () {
+
+app.post("/submitResponse", function(req,res){
+var updatedData = {
+  "user": req.cookies.user,
+  "title":req.body.title,
+  "data": req.body.bawton
+};
+user.updateChart(updatedData, function(vecchio, nuovo){
+  console.log("OLD: "+vecchio)
+       res.clearCookie(vecchio);
+            res.cookie(nuovo, undefined);
+            console.log("updateChart Complete")
+  res.redirect("/mySurveys")
+});
+
+
+});
+var listener = app.listen(3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
