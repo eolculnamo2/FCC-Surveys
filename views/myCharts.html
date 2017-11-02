@@ -16,8 +16,10 @@
   <body>
     
 <div class = "container" id = "userBox">
+
   <span class ="white" id = "name">
   </span>
+
     <span class ="white" id = "infor">
   </span>
   <center>
@@ -28,6 +30,31 @@ Notitia
     Make and Take Surveys
   </h3>
         <center>
+
+          <a href = "/dashboard">
+          <button class = "logoutBut">
+            Back
+          </button>
+        </a>
+          <div id = "buttons">
+          </div>
+
+          <div class = "rows">
+            <div class ="col-md-2">
+            </div>
+            <div class = col-md-6>
+                <div id = "graph">
+    </div>
+  </div>
+  <div class = col-md-4>
+    <form id ="formOptions" method = "POST" action="/submitResponse">
+
+    </form>
+  </div>
+  </div>
+    </center>
+  </center>
+
           <div id = "buttons">
           </div>
     <div id = "graph">
@@ -37,43 +64,69 @@ Notitia
 
 <div id = "userData">
 </div>
+
 </div>
 
 
     <script src="https://d3js.org/d3.v4.js"></script>
     <script>
-                  
+
     //parse
     var variable = document.cookie.split(";")
     var stepBarObjects = variable[1].split("=")
     var barObjects = JSON.parse(stepBarObjects[0])
-    //var title = Object.keys(barObjects[0])[0]   
-    //arrange
-          //buttons created in forEach fx below will dictate what index of dataset is to be used.
-      var q = 0;
+
+
+    //End Cookie Parse
+          //Buttons created in forEach fx below will dictate what index of dataset is to be used.
+
+      var nameArray = []
+      var copyNameArray =[];
+    barObjects.forEach(function(x,i){
+
+      nameArray.push(Object.keys(x));
+      copyNameArray.push(Object.keys(x));
+      $("#buttons").append("<button onClick = 'setIndex("+i+")' class='logoutBut'>"+x.title+"</button>   ")
+    })
+    
+ 
+
+        for(var i = 0; i<nameArray.length; i++){
+          for(var j=0; j<nameArray[i].length;j++){
+            if(nameArray[i][j] === "title"){
+              nameArray[i].splice(j,1)
+              copyNameArray[i].splice(j,1)
+            }
+          }
+        }
+       
+        for(var i = 0; i<nameArray.length; i++){
+          for(var j=0; j<nameArray[i].length;j++){
+            var pos = nameArray[i][j]
+          nameArray[i][j] = barObjects[i][pos]
+          }
+        }
+        dataset = nameArray
+   
+
+     var q = 0;
     function setIndex(i){
       q = i;
       d3.select("svg").remove();
+      $("#formOptions").html('');
+      var titleValue = barObjects[q]["title"]
+       document.getElementById("infor").innerHTML = titleValue;
+             copyNameArray[q].forEach((x,i)=>{
+        $("#formOptions").append(x+"<br><input class='radios' name = 'bawton' type = 'radio' value ="+'"'+x+'"'+"></input>")
+        if(i === copyNameArray[q].length-1){
+          $("#formOptions").append("<input type = 'hidden' value = "+'"'+titleValue+'"'+" name='title'></input>")
+        $("#formOptions").append("<br><input type = 'submit'></input>")
+      }
+      })
       graph();
     }
-    var objectArray = [];
-    barObjects.forEach(function(x,i){
-      objectArray.push(x);
-      $("#buttons").append("<button onClick = 'setIndex("+i+")' class='logoutBut'>"+x.title+"</button>   ")
-      
-    })
-
-
-      //localStorage.setItem("Test", JSON.stringify(objectArray))
-    var numberOfArrays = objectArray.length;
-      //load dataset object
-      datasetObject = {
-        
-      }
-
-      
-    const dataset = [[4,3,5],[20,33,111]]
-                  
+           
+    
     
   function graph(){
 var h = 400;
@@ -92,41 +145,40 @@ var canvas =d3.select("#graph")
         .append("svg")
         .attr("width", h)
         .attr("height",w)
+
  var bars = canvas.selectAll("rect")
   .data(dataset[q])
     .enter()
      .append("rect")
       .attr("height",(d)=>{
-      return d
+
+      return yScale(d)
     })
-      .attr("width",(d)=>{
-      return 75;
+      .attr("width",(d,i)=>{
+      return 50;
     })
       .attr("y", function(d,i){
-    return h-d;
+    return h-yScale(d)-padding;
   })
        .attr("x", function(d,i){
-    return i*85;
+    return i*85+padding;
   })
       .attr("fill", "blue")
- 
- var tett = canvas.selectAll("div")
-    .data(dataset[q])
-    .enter()
-     .append("div")
-           .text(()=>{return "hi"})
- 
+      .append("title")
+      .text((d,i)=>{
+        return copyNameArray[q][i]+": " + d
+      });
+
      const xAxis = d3.axisBottom(xScale)
     canvas.append("g")
-       .attr("transform", "translate(0," + (h+60) + ")")  
+       .attr("transform", "translate(0," + (h-padding) + ")")  
        .call(xAxis);
-    
     const yAxis = d3.axisLeft(yScale);
     canvas.append("g")
-    .attr("transform", "translate("+(padding+10)+",0)")
+    .attr("transform", "translate("+(padding)+",0)")
           .call(yAxis);
-  }
-    
+        }
+
     </script>
     
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>

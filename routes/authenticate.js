@@ -15,6 +15,38 @@ module.exports = {
           });
     });
 },
+
+    updateChart: function(info,callback){
+      mongo.MongoClient.connect(url, function(err,db){
+        db.collection('barCharts').findOne({"user": info.user}, function(err,res){
+          var oldArrayToDelete = [];
+        
+          for(var i=0; i<res["chart"].length; i++){
+            oldArrayToDelete.push(res["chart"][i]);
+          }
+            var deletingArray = JSON.stringify(oldArrayToDelete);
+          var updater =[]
+          
+           res["chart"].forEach((x,i)=>{
+            
+           if(x.title === info.title){
+
+            var locator = info.data
+            res["chart"][i][locator]++;
+            updater = res.chart;
+          } 
+          })
+           console.log("DELETER: " + deletingArray)
+           callback(deletingArray,JSON.stringify(updater));
+          db.collection('barCharts').update(
+                                              {user: info.user},
+                                              {$set: {chart: updater}}
+                                           )
+         
+                                         })
+       })
+    },
+
     newUser: function(userInfo,callback){
           mongo.MongoClient.connect(url, function(err,db){
 
@@ -46,6 +78,15 @@ module.exports = {
      })
     
   },
+
+  logout: function(info, callback){
+    mongo.MongoClient.connect(url,function(err,db){
+      db.collection('barCharts').findOne({user: info}, function(err,res){
+        callback(res.chart)
+      })
+    })
+  },
+
   changePassword: function(info, callback){
   
     mongo.MongoClient.connect(url, function(err,db){
