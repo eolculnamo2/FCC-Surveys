@@ -1,1 +1,18 @@
+Latest Updates:
+=> Added link for external users with takeSurvey.html
+
+New Tasks:
+=> Fix cookie parsing so that it will pull correct data. Use a filter method of some kind to ensure that when asked for user or guest, it will provide a valid cookie.
+=> D3 Continues to be a pain in the ass. Chart shows the wrong bars for the numbers still.
+
+Check List:
+Fix Cookies
+Make D3 show correct and corresponding bars
+Add random button
+
+B D3 titles are not correct. They are flipped due to yScale.
+2. Create Random Button to Get Random Survey
+3. Allow for Each Survey to pulled via its unique url.
+4. Make the D3 charts look good.
+5. Make the Rest of the website look good.
 

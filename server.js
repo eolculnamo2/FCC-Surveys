@@ -1,5 +1,4 @@
 
-
 var express = require('express');
 var bodyParser = require('body-parser')
 var mongo = require('mongodb')
@@ -21,6 +20,37 @@ app.use(session({secret:"asdflkj",
 
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
+});
+
+app.get("/takesurvey/:str", function (request, response) {
+  /// ==> takesurvey/eolculnamo2+dogs_or_cats
+  var entered = request.params.str;
+  var dataArray = entered.split("+");
+  var chartName = dataArray[1].replace(/_/g," ");
+  response.cookie("guest", dataArray[0])
+
+  user.takeSurvey(dataArray[0],chartName,function(err,res){
+    //prepare for cookies
+    var b = JSON.stringify(res);
+    var a = b.slice(2, b.length-2);
+    var c= a.split("},{")
+    var toCookies = "";
+
+    c.forEach(function(x,i){
+      var e = x.split(",")
+      var d = e[0].split(":")
+      if(d[1] === JSON.stringify(chartName)){
+        console.log(d[1]+"Willsend"+x);
+        toCookies = x;
+        }
+    })
+
+    console.log("A "+c[0])
+
+      response.cookie("guestChart", toCookies);
+         response.sendFile(__dirname + '/views/takeSurvey.html');
+  })
+
 });
 app.get("/mySurveys", function (request, response) {
   console.log(request.cookies[1])
@@ -78,6 +108,7 @@ app.post("/login", function(req,res){
   }
   user.authenticateUser(loginInfo, function(err,result,data){
     if(result){
+      console.log(data)
       var string_data_chart = JSON.stringify(data.chart)
       res.cookie("user",data.user)
       res.cookie(string_data_chart)
@@ -127,17 +158,38 @@ app.post("/submitForm", function(req,res){
 });
 
 app.post("/submitResponse", function(req,res){
+  console.log(req.body.nonuser)
+  if(req.body.nonuser == "false"){
 var updatedData = {
   "user": req.cookies.user,
   "title":req.body.title,
-  "data": req.body.bawton
+  "data": req.body.bawton,
+  "nonuser": req.body.nonuser
 };
-user.updateChart(updatedData, function(vecchio, nuovo){
-  console.log("OLD: "+vecchio)
+}
+
+  else if(req.body.nonuser == "true"){
+
+    var updatedData = {
+  "user": req.cookies.guest,
+  "title":req.body.title,
+  "data": req.body.bawton,
+  "nonuser": req.body.nonuser
+};
+
+  }
+  
+user.updateChart(updatedData, function(vecchio, nuovo,nonUserTest){
+
        res.clearCookie(vecchio);
             res.cookie(nuovo, undefined);
-            console.log("updateChart Complete")
+          
+  if(!nonUserTest){
   res.redirect("/mySurveys")
+}
+  if(nonUserTest){
+  res.redirect("back")
+}
 });
 
 
@@ -145,4 +197,3 @@ user.updateChart(updatedData, function(vecchio, nuovo){
 var listener = app.listen(3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
-
