@@ -38,6 +38,8 @@ Notitia
         </a>
           <div id = "buttons">
           </div>
+          <div id = "link">
+          </div>
 
           <div class = "rows">
             <div class ="col-md-2">
@@ -55,12 +57,6 @@ Notitia
     </center>
   </center>
 
-          <div id = "buttons">
-          </div>
-    <div id = "graph">
-    </div>
-    </center>
-  </center>
 
 <div id = "userData">
 </div>
@@ -70,7 +66,11 @@ Notitia
 
     <script src="https://d3js.org/d3.v4.js"></script>
     <script>
-
+        //Parses name
+     var variable = document.cookie.split(";")
+    var parsed = variable[0].split("=")
+     var userID = parsed[1];
+    
     //parse
     var variable = document.cookie.split(";")
     var stepBarObjects = variable[1].split("=")
@@ -111,15 +111,18 @@ Notitia
 
      var q = 0;
     function setIndex(i){
+       var titleValue = barObjects[q]["title"]
+      var urlTitle = titleValue.replace(/ /g, "_")
+      $("#link").html("https://jealous-ellipse.glitch.me/takesurvey/"+userID+"+"+urlTitle)
       q = i;
       d3.select("svg").remove();
       $("#formOptions").html('');
-      var titleValue = barObjects[q]["title"]
+     
        document.getElementById("infor").innerHTML = titleValue;
              copyNameArray[q].forEach((x,i)=>{
         $("#formOptions").append(x+"<br><input class='radios' name = 'bawton' type = 'radio' value ="+'"'+x+'"'+"></input>")
         if(i === copyNameArray[q].length-1){
-          $("#formOptions").append("<input type = 'hidden' value = "+'"'+titleValue+'"'+" name='title'></input>")
+          $("#formOptions").append("<input type = 'hidden' value = "+'"'+titleValue+'"'+" name='title'></input><input type = 'hidden' name = 'nonuser' value = "+false+"></input>")
         $("#formOptions").append("<br><input type = 'submit'></input>")
       }
       })

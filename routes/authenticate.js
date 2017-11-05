@@ -15,7 +15,14 @@ module.exports = {
           });
     });
 },
-
+    takeSurvey: function(user,chart,callback){
+      console.log("Called: "+user+ " "+chart)
+          mongo.MongoClient.connect(url, function(err,db){
+            db.collection('barCharts').findOne({"user": user}, function(err,res){
+              callback(null, res.chart);
+            })
+          })
+    },
     updateChart: function(info,callback){
       mongo.MongoClient.connect(url, function(err,db){
         db.collection('barCharts').findOne({"user": info.user}, function(err,res){
@@ -30,14 +37,16 @@ module.exports = {
            res["chart"].forEach((x,i)=>{
             
            if(x.title === info.title){
-
+           
             var locator = info.data
+         
             res["chart"][i][locator]++;
             updater = res.chart;
           } 
           })
            console.log("DELETER: " + deletingArray)
-           callback(deletingArray,JSON.stringify(updater));
+            console.log("UPDATER: " + updater)
+           callback(deletingArray,JSON.stringify(updater), info.nonuser);
           db.collection('barCharts').update(
                                               {user: info.user},
                                               {$set: {chart: updater}}

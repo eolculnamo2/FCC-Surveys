@@ -35,6 +35,15 @@ background-color: white;}
 #formOptions{
   background-color: white;
 }
+#options{
+  background-color: white;
+  width: 50%;
+  padding: 12px;
+}
+#title{
+  font-size: 30px;
+  color: white;
+}
 
 #userBox{
   width: 75%;
