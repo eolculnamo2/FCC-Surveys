@@ -41,14 +41,35 @@ Notitia
     <script src="https://d3js.org/d3.v4.js"></script>
   <script>
     var variable = document.cookie.split(";")
-    var parsed = variable[0].split("=")
-     document.getElementById("name").innerHTML=parsed[1]
-    
-    
+    var w;
+    var testArray =[];
+    //PARSE USERNAME
+    for(var i=0; i<variable.length; i++){
+        var z = variable[i].split("=");     
+        if(variable[i].split("=")[0] == "user" || variable[i].split("=")[0] == " user"){
+         
+          w = i;
+        }
+    }
+    var a = variable[w].split("=");
+
+     document.getElementById("name").innerHTML=a[1]
+     //PARSE SURVEY ARRAY
+
+    for(var i=0; i<variable.length; i++){
+        var z = variable[i].split("=");     
+        if(variable[i].split("=")[0] == " userData"){
+       
+          w = i;
+        }
+    }
+
+
     //Code to Parse Object from Cookie
        // var variable = document.cookie.split(";")
-    var stepBarObjects = variable[1].split("=")
+    var stepBarObjects = variable[w].split("=")
     var barObjects = JSON.parse(stepBarObjects[0])
+    alert(barObjects)
      var title = Object.keys(barObjects[0])[0]   
    
 
@@ -68,12 +89,14 @@ var array = ll;  //.split("],[");
   </script>
     <script>
       //start D3.JS => //dataset comes from cookies assigned by the server
+
+    var charted = charter.split("],[")
            var charter = localStorage.getItem("chart")
            var charted = charter.split("],[");
             var dataset =[]
       charted.forEach(function(x){ dataset.push([x])})
                   //const dataset = [400, 31, 22, 17, 25, 18, 29, 14, 9];
-    
+    /*
       function go(){
 
 var canvas =d3.select("#graph")
@@ -102,7 +125,8 @@ var canvas =d3.select("#graph")
            .text(()=>{return "hi"})
     }
 
-      go();</script>
+      go();*/
+    </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>

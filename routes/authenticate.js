@@ -4,13 +4,15 @@ var cookieParser = require('cookie-parser')
 
 var url = "mongodb://eolculnamo2:ghost12@ds235785.mlab.com:35785/singletempo";
 module.exports = {
-    newChart: function(info, id){
+    newChart: function(info, id, callback){
           mongo.MongoClient.connect(url,function(err,db){
           db.collection('barCharts').findOne({"user": id}, function(err,res){
             db.collection('barCharts').update(
                                               {user: id},
                                               {$push: {chart: info}}, function(err,result){
-        
+                       db.collection('barCharts').findOne({"user": id}, function(err,ress){
+                        callback(null,ress)
+                       });
             })
           });
     });
@@ -39,13 +41,13 @@ module.exports = {
            if(x.title === info.title){
            
             var locator = info.data
-         
+         console.log("Locator: "+JSON.stringify(res["chart"][i]))
             res["chart"][i][locator]++;
             updater = res.chart;
           } 
           })
            console.log("DELETER: " + deletingArray)
-            console.log("UPDATER: " + updater)
+            console.log("UPDATER: " + JSON.stringify(updater))
            callback(deletingArray,JSON.stringify(updater), info.nonuser);
           db.collection('barCharts').update(
                                               {user: info.user},
@@ -87,7 +89,7 @@ module.exports = {
      })
     
   },
-
+/*
   logout: function(info, callback){
     mongo.MongoClient.connect(url,function(err,db){
       db.collection('barCharts').findOne({user: info}, function(err,res){
@@ -95,7 +97,7 @@ module.exports = {
       })
     })
   },
-
+*/
   changePassword: function(info, callback){
   
     mongo.MongoClient.connect(url, function(err,db){

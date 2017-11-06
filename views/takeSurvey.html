@@ -63,7 +63,7 @@ Notitia
           w = i;
         }
     }
-  
+    var copyNameArray =[];
     var a = variable[w].split("=");
     var b = a[1].replace(/%20/g," ");
     var c = b.replace(/%22%3A%22/g,":");
@@ -73,11 +73,15 @@ Notitia
     var title = final[0].split(":")
     final.shift();
     document.getElementById("title").innerHTML = variable;
+
     //datify
   var nameSet = [];
   var dataset =[];
   final.forEach((x,i)=>{
     var y = x.split(":")
+ 
+    copyNameArray.push(y[0])
+
     $("#options").append(y[0]+"<input class = 'radios' type ='radio' name ='bawton' value ="+"'"+y[0]+"' </input>")
     dataset.push(parseInt(y[1]));
     if(i === final.length-1){
@@ -92,15 +96,16 @@ document.getElementById("title").innerHTML = nameSet;
 var h = 400;
 var w = 400
 var padding = 60;
+var divided = w/dataset.length
         
         const xScale = d3.scaleLinear()
-          .domain([0,5])
+          .domain([0,dataset.length])
      .range([padding, w + padding]);
     
     const yScale = d3.scaleLinear()
-                .domain([d3.min(dataset), d3.max(dataset)])
+                .domain([0, d3.max(dataset,(d)=>d)])
      .range([h - padding, padding]);
-        
+    
 var canvas =d3.select("#graph")
         .append("svg")
         .attr("width", h)
@@ -112,16 +117,16 @@ var canvas =d3.select("#graph")
      .append("rect")
       .attr("height",(d)=>{
 
-      return yScale(d)
+      return h-yScale(d)-padding
     })
       .attr("width",(d,i)=>{
-      return 50;
+      return divided/2-5;
     })
       .attr("y", function(d,i){
-    return h-yScale(d)-padding;
+    return yScale(d)
   })
        .attr("x", function(d,i){
-    return i*85+padding;
+    return i*divided/2+padding
   })
       .attr("fill", "blue")
       .append("title")
@@ -129,10 +134,21 @@ var canvas =d3.select("#graph")
         return d;
       });
 
+    var text = canvas.selectAll("text")
+    .data(copyNameArray)
+    .enter()
+    .append("text")
+    .text((d)=> d)
+    .attr("y", h-40)
+    .attr("x", (d,i)=>i*divided/2+padding+padding/2+5)
+
      const xAxis = d3.axisBottom(xScale)
     canvas.append("g")
        .attr("transform", "translate(0," + (h-padding) + ")")  
-       .call(xAxis);
+        .call(xAxis
+        .ticks(0)
+        .tickFormat("") 
+             );
     const yAxis = d3.axisLeft(yScale);
     canvas.append("g")
     .attr("transform", "translate("+(padding)+",0)")

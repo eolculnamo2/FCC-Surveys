@@ -67,29 +67,55 @@ Notitia
     <script src="https://d3js.org/d3.v4.js"></script>
     <script>
         //Parses name
+         var w;
+
+
      var variable = document.cookie.split(";")
-    var parsed = variable[0].split("=")
+         for(var i=0; i<variable.length; i++){
+        var z = variable[i].split("=");     
+        if(variable[i].split("=")[0] == " user" ||variable[i].split("=")[0] == "user" ){
+          w = i;
+        }
+    }
+    var parsed = variable[w].split("=")
      var userID = parsed[1];
-    
-    //parse
+
+
     var variable = document.cookie.split(";")
-    var stepBarObjects = variable[1].split("=")
-    var barObjects = JSON.parse(stepBarObjects[0])
+   
+    var testArray =[];
+
+    for(var i=0; i<variable.length; i++){
+        var z = variable[i].split("=");     
+        if(variable[i].split("=")[0] == " userData"){
+          w = i;
+        }
+    }
+    var a = variable[w].split("=");
+    console.log(a[1])
+    var b = a[1].replace(/%20/g," ");
+    var c = b.replace(/%3A/g,":");
+    var d = c.replace(/%22/g, '"');
+    var e = d.replace(/%3A/g, ":");
+    var f = e.replace(/%5B%7B/g,"[{")
+    var g = f.replace(/%7D%5D/g, "}]")
+    var h = g.replace(/%7D/g, "}")
+    var j = h.replace(/%7B/g, "{")
+
+    var k = j.replace(/%3F/g,"?");
+    var final = k.replace(/%2C/g,",");
 
 
-    //End Cookie Parse
-          //Buttons created in forEach fx below will dictate what index of dataset is to be used.
+    var barObjects = JSON.parse(final)
 
       var nameArray = []
       var copyNameArray =[];
     barObjects.forEach(function(x,i){
-
+      console.log("F(X): "+x)
       nameArray.push(Object.keys(x));
       copyNameArray.push(Object.keys(x));
       $("#buttons").append("<button onClick = 'setIndex("+i+")' class='logoutBut'>"+x.title+"</button>   ")
     })
-    
- 
 
         for(var i = 0; i<nameArray.length; i++){
           for(var j=0; j<nameArray[i].length;j++){
@@ -111,10 +137,11 @@ Notitia
 
      var q = 0;
     function setIndex(i){
+       q = i;
        var titleValue = barObjects[q]["title"]
       var urlTitle = titleValue.replace(/ /g, "_")
       $("#link").html("https://jealous-ellipse.glitch.me/takesurvey/"+userID+"+"+urlTitle)
-      q = i;
+     
       d3.select("svg").remove();
       $("#formOptions").html('');
      
@@ -135,13 +162,13 @@ Notitia
 var h = 400;
 var w = 700
 var padding = 60;
-        
+var divided = w/dataset[q].length
         const xScale = d3.scaleLinear()
-          .domain([0,5])
+          //.domain([0,dataset[q].length])
      .range([padding, w + padding]);
     
     const yScale = d3.scaleLinear()
-                .domain([d3.min(dataset[q]), d3.max(dataset[q])])
+                .domain([0, d3.max(dataset[q])])
      .range([h - padding, padding]);
         
 var canvas =d3.select("#graph")
@@ -155,16 +182,16 @@ var canvas =d3.select("#graph")
      .append("rect")
       .attr("height",(d)=>{
 
-      return yScale(d)
+      return h-yScale(d)-padding
     })
       .attr("width",(d,i)=>{
-      return 50;
+        return divided/2-5;
     })
       .attr("y", function(d,i){
-    return h-yScale(d)-padding;
+    return yScale(d)
   })
        .attr("x", function(d,i){
-    return i*85+padding;
+   return i*divided/2+padding
   })
       .attr("fill", "blue")
       .append("title")
@@ -172,10 +199,21 @@ var canvas =d3.select("#graph")
         return copyNameArray[q][i]+": " + d
       });
 
+    var text = canvas.selectAll("text")
+    .data(copyNameArray[q])
+    .enter()
+    .append("text")
+    .text((d)=> d)
+    .attr("y", h-40)
+    .attr("x", (d,i)=>i*divided/2+padding+padding/2+5)
+
      const xAxis = d3.axisBottom(xScale)
     canvas.append("g")
-       .attr("transform", "translate(0," + (h-padding) + ")")  
-       .call(xAxis);
+       .attr("transform", "translate(0," + (h-padding+5) + ")")
+       .call(xAxis
+            .ticks(0)
+            .tickFormat("") 
+             );
     const yAxis = d3.axisLeft(yScale);
     canvas.append("g")
     .attr("transform", "translate("+(padding)+",0)")
