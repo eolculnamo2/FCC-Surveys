@@ -44,7 +44,10 @@ background-color: white;}
   font-size: 30px;
   color: white;
 }
-
+#link{
+  background-color: white;
+  width: 95%;
+}
 #userBox{
   width: 75%;
   height: 100vh;

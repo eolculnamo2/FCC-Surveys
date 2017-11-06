@@ -39,6 +39,7 @@ app.get("/takesurvey/:str", function (request, response) {
     c.forEach(function(x,i){
       var e = x.split(",")
       var d = e[0].split(":")
+      console.log(d[1] +" " + JSON.stringify(chartName))
       if(d[1] === JSON.stringify(chartName)){
         console.log(d[1]+"Willsend"+x);
         toCookies = x;
@@ -46,7 +47,7 @@ app.get("/takesurvey/:str", function (request, response) {
     })
 
     console.log("A "+c[0])
-
+      console.log(toCookies)
       response.cookie("guestChart", toCookies);
          response.sendFile(__dirname + '/views/takeSurvey.html');
   })
@@ -61,16 +62,16 @@ app.get("/dashboard", function (request, response) {
   response.sendFile(__dirname + '/views/dash.html');
 });
 app.get("/logout", function(req,res){
-  user.logout(req.cookies.user,function(data){
-    //clears chart data cookies
-    res.clearCookie(JSON.stringify(data));
+ // user.logout(req.cookies.user,function(data){
+
+    res.clearCookie("userData");
     req.session.destroy();
   res.clearCookie("_id")
   res.clearCookie("user")
   res.clearCookie("password")
   res.clearCookie("chart")
   res.redirect("/")
-  })
+//  })
 
 })
 
@@ -111,7 +112,7 @@ app.post("/login", function(req,res){
       console.log(data)
       var string_data_chart = JSON.stringify(data.chart)
       res.cookie("user",data.user)
-      res.cookie(string_data_chart)
+      res.cookie("userData",string_data_chart)
       console.log(req.cookies.user)
     res.redirect('/dashboard');
     }
@@ -151,10 +152,13 @@ app.post("/submitForm", function(req,res){
    dataObject[newData[i]] = 0;
    }
  });
-  console.log(dataObject)
-  user.newChart(dataObject,req.cookies.user);
+ 
+  user.newChart(dataObject,req.cookies.user,function(err, result){
+    res.cookie("userData", JSON.stringify(result.chart))
+      res.redirect("/dashboard")
+  });
 
-  res.redirect("/dashboard")
+
 });
 
 app.post("/submitResponse", function(req,res){
@@ -180,15 +184,19 @@ var updatedData = {
   }
   
 user.updateChart(updatedData, function(vecchio, nuovo,nonUserTest){
+      res.clearCookie("userData")
+    res.cookie("userData", nuovo);   
+    res.clearCookie("guestChart")  
+       res.cookie("guestChart", nuovo);
+  res.redirect("back")
 
-       res.clearCookie(vecchio);
-            res.cookie(nuovo, undefined);
-          
   if(!nonUserTest){
+ 
   res.redirect("/mySurveys")
 }
   if(nonUserTest){
-  res.redirect("back")
+  
+
 }
 });
 

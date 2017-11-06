@@ -3,6 +3,9 @@ Latest Updates:
 
 New Tasks:
 => Fix cookie parsing so that it will pull correct data. Use a filter method of some kind to ensure that when asked for user or guest, it will provide a valid cookie.
+-->
+1) Update login cookies to actually have name instead of the chart as the name? Unless easier way???
+2) Update rest of cookies to filter for specified cookie
 => D3 Continues to be a pain in the ass. Chart shows the wrong bars for the numbers still.
 
 Check List:
