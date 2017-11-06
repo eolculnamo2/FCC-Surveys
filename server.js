@@ -182,7 +182,8 @@ var updatedData = {
 };
 
   }
-  
+
+  if(updatedData.data !== undefined){
 user.updateChart(updatedData, function(vecchio, nuovo,nonUserTest){
       res.clearCookie("userData")
     res.cookie("userData", nuovo);   
@@ -199,7 +200,10 @@ user.updateChart(updatedData, function(vecchio, nuovo,nonUserTest){
 
 }
 });
-
+}
+else{
+  res.redirect("back")
+}
 
 });
 var listener = app.listen(3000, function () {

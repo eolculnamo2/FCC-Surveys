@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
 
   </head>
   <body>
@@ -24,7 +25,7 @@
 <body>
 <div class = "container" id = "userBox">
   <center>
-  <h1 class="white">
+  <h1 class="white titleClass">
 Notitia  
   </h1>
   <h3 class="white">
@@ -71,9 +72,10 @@ Notitia
     var e = d.replace(/%3A/g, ":");
     var final = e.split("%2C")
     var title = final[0].split(":")
-    final.shift();
+    var namer = final.shift();
+    var nome = namer.split(":")
     document.getElementById("title").innerHTML = variable;
-
+    
     //datify
   var nameSet = [];
   var dataset =[];
@@ -94,7 +96,7 @@ document.getElementById("title").innerHTML = nameSet;
 
   function graph(){
 var h = 400;
-var w = 400
+var w = 700
 var padding = 60;
 var divided = w/dataset.length
         
@@ -128,7 +130,7 @@ var canvas =d3.select("#graph")
        .attr("x", function(d,i){
     return i*divided/2+padding
   })
-      .attr("fill", "blue")
+      .attr("fill", "#c9a358")
       .append("title")
       .text((d,i)=>{
         return d;
@@ -141,6 +143,14 @@ var canvas =d3.select("#graph")
     .text((d)=> d)
     .attr("y", h-40)
     .attr("x", (d,i)=>i*divided/2+padding+padding/2+5)
+
+        var title = canvas.selectAll("text")
+    .data(nome[1])
+    .enter()
+    .append("text")
+    .text((d)=>nome[1])
+    .attr("y", 25)
+    .attr("x", divided/2)
 
      const xAxis = d3.axisBottom(xScale)
     canvas.append("g")
