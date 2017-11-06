@@ -11,6 +11,7 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
 
    </head>
   <body>
@@ -23,7 +24,7 @@
     <span class ="white" id = "infor">
   </span>
   <center>
-  <h1 class="white" id = "as">
+  <h1 class="white titleClass" id = "as">
 Notitia  
   </h1>
   <h3 class="white">
@@ -140,7 +141,7 @@ Notitia
        q = i;
        var titleValue = barObjects[q]["title"]
       var urlTitle = titleValue.replace(/ /g, "_")
-      $("#link").html("https://jealous-ellipse.glitch.me/takesurvey/"+userID+"+"+urlTitle)
+      $("#link").html("<h3 class = 'share'>Share Survey:</h3><textarea>https://jealous-ellipse.glitch.me/takesurvey/"+userID+"+"+urlTitle+"</textarea>")
      
       d3.select("svg").remove();
       $("#formOptions").html('');
@@ -193,7 +194,7 @@ var canvas =d3.select("#graph")
        .attr("x", function(d,i){
    return i*divided/2+padding
   })
-      .attr("fill", "blue")
+      .attr("fill", "#c9a358")
       .append("title")
       .text((d,i)=>{
         return copyNameArray[q][i]+": " + d
@@ -206,6 +207,14 @@ var canvas =d3.select("#graph")
     .text((d)=> d)
     .attr("y", h-40)
     .attr("x", (d,i)=>i*divided/2+padding+padding/2+5)
+
+    var title = canvas.selectAll("text")
+    .data(barObjects[q]["title"])
+    .enter()
+    .append("text")
+    .text((d)=>barObjects[q]["title"])
+    .attr("y", 25)
+    .attr("x", divided/2)
 
      const xAxis = d3.axisBottom(xScale)
     canvas.append("g")
