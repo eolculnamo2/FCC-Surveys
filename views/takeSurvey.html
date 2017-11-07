@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Welcome to Glitch!</title>
-    <meta name="description" content="A cool thing made with Glitch">
-    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <title>Notitia Survey App</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,9 +23,9 @@
 <body>
 <div class = "container" id = "userBox">
   <center>
-  <h1 class="white titleClass">
+ <a href = "/"> <h1 class="white titleClass">
 Notitia  
-  </h1>
+   </h1></a>
   <h3 class="white">
     Make and Take Surveys
   </h3>
@@ -35,12 +33,14 @@ Notitia
   </div>
   </center>
 <div class = "rows">
-  <div class = "col-md-2">
+  <div class = "col-md-1">
   </div>
   <div class = "col-md-6">
 <div id = "graph">
 </div>
 </div>
+  <div class = "col-md-1">
+  </div>
   <div class = "col-md-4">
     <center>
    <form id = "options" method = "POST" action="/submitResponse">
@@ -49,7 +49,7 @@ Notitia
   </div>
 </div>
 </div>
-</div>
+
  <script src="https://d3js.org/d3.v4.js"></script>
 <script type="text/javascript">
    // %22title%22%3A%22Sun%20or%20Moon%22%2C%22Sun%22%3A6%2C%22Moon%22%3A8%2C%22Stars%22%3A2%2C%22Black%20Hole%22%3A11
@@ -95,11 +95,17 @@ document.getElementById("title").innerHTML = nameSet;
 
 
   function graph(){
+    
 var h = 400;
-var w = 700
+var w = 400;
 var padding = 60;
-var divided = w/dataset.length
-        
+var divided = w*1.75/dataset.length
+
+if(window.innerWidth < 500){
+  h = 200;
+  w = 200;
+  divided = w*1.2/dataset.length
+}
         const xScale = d3.scaleLinear()
           .domain([0,dataset.length])
      .range([padding, w + padding]);
@@ -110,8 +116,8 @@ var divided = w/dataset.length
     
 var canvas =d3.select("#graph")
         .append("svg")
-        .attr("width", h)
-        .attr("height",w)
+        .attr("width", w)
+        .attr("height",h)
 
  var bars = canvas.selectAll("rect")
   .data(dataset)
@@ -142,8 +148,20 @@ var canvas =d3.select("#graph")
     .append("text")
     .text((d)=> d)
     .attr("y", h-40)
-    .attr("x", (d,i)=>i*divided/2+padding+padding/2+5)
-
+    .attr("x", (d,i)=>{
+      if(window.innerWidth<500){
+        return i*divided/2+padding+10;
+      }
+      else{
+     return i*divided/2+padding+padding/2+5
+      }
+    })
+    .attr("font-size",()=>{
+          if(window.innerWidth<500){
+            return "8px";
+          }
+          })
+    
         var title = canvas.selectAll("text")
     .data(nome[1])
     .enter()
@@ -151,6 +169,11 @@ var canvas =d3.select("#graph")
     .text((d)=>nome[1])
     .attr("y", 25)
     .attr("x", divided/2)
+    .attr("font-size",()=>{
+          if(window.innerWidth<500){
+            return "10px";
+          }
+          })
 
      const xAxis = d3.axisBottom(xScale)
     canvas.append("g")

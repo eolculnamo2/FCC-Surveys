@@ -35,11 +35,10 @@ box-shadow: 10px 10px 5px #9b9b9b !important;
 }
 #graph{
 background-color: #9b9b9b;
-height: 450px;}
+}
 
 #formOptions{
   background-color: #9b9b9b;
-  box-shadow: 10px 10px 5px black
 }
 #options{
   background-color: #9b9b9b;
@@ -56,9 +55,9 @@ height: 450px;}
   width: 95%;
 }
 #userBox{
-  width: 75%;
-  height: 100vh;
-  margin-left: 10%;
+  width: 90%;
+  height: 130vh;
+  margin-left: 5%;
   background-color: #3b3d3f;
   border-radius: 5px;
 }
@@ -88,6 +87,8 @@ height: 450px;}
   margin-top: 2%;
   position:relative;
   color: black;
+  z-index: 1;
+  background-color: #b2b0ad;
 }
     .logoutBut:focus{
         outline:none;
@@ -122,4 +123,7 @@ height: 450px;}
 
 .share{
   color:#5a9164;
+}
+@media only screen and (max-device-width: 480px){
+
 }
