@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Welcome to Glitch!</title>
-    <meta name="description" content="A cool thing made with Glitch">
-    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <title>Notitia Survey App</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,13 +41,15 @@ Notitia
           </div>
 
           <div class = "rows">
-            <div class ="col-md-2">
+            <div class ="col-md-1">
             </div>
-            <div class = col-md-6>
+            <div class = "col-md-6">
                 <div id = "graph">
-    </div>
-  </div>
-  <div class = col-md-4>
+              </div>
+            </div>
+              <div class ="col-md-1">
+            </div>
+  <div class = "col-md-4">
     <form id ="formOptions" method = "POST" action="/submitResponse">
 
     </form>
@@ -141,7 +141,7 @@ Notitia
        q = i;
        var titleValue = barObjects[q]["title"]
       var urlTitle = titleValue.replace(/ /g, "_")
-      $("#link").html("<h3 class = 'share'>Share Survey:</h3><textarea>https://jealous-ellipse.glitch.me/takesurvey/"+userID+"+"+urlTitle+"</textarea>")
+      $("#link").html("<div><center><br/><br/><br/><h3 class = 'share'>Share Survey:</h3><textarea>https://jealous-ellipse.glitch.me/takesurvey/"+userID+"+"+urlTitle+"</textarea></center></div>")
      
       d3.select("svg").remove();
       $("#formOptions").html('');
@@ -160,10 +160,17 @@ Notitia
     
     
   function graph(){
-var h = 400;
-var w = 700
+var h = 375;
+var w = 400
 var padding = 60;
-var divided = w/dataset[q].length
+var divided = w*1.75/dataset[q].length
+
+if(window.innerWidth < 500){
+  h = 200;
+  w = 200;
+  divided = w*1.2/dataset.length
+}
+      
         const xScale = d3.scaleLinear()
           //.domain([0,dataset[q].length])
      .range([padding, w + padding]);
@@ -174,8 +181,8 @@ var divided = w/dataset[q].length
         
 var canvas =d3.select("#graph")
         .append("svg")
-        .attr("width", h)
-        .attr("height",w)
+        .attr("width", w)
+        .attr("height",h)
 
  var bars = canvas.selectAll("rect")
   .data(dataset[q])
@@ -206,7 +213,19 @@ var canvas =d3.select("#graph")
     .append("text")
     .text((d)=> d)
     .attr("y", h-40)
-    .attr("x", (d,i)=>i*divided/2+padding+padding/2+5)
+     .attr("x", (d,i)=>{
+      if(window.innerWidth<500){
+        return i*divided/2+padding+10;
+      }
+      else{
+     return i*divided/2+padding+padding/2+5
+      }
+    })
+    .attr("font-size",()=>{
+          if(window.innerWidth<500){
+            return "8px";
+          }
+          })
 
     var title = canvas.selectAll("text")
     .data(barObjects[q]["title"])
@@ -215,7 +234,11 @@ var canvas =d3.select("#graph")
     .text((d)=>barObjects[q]["title"])
     .attr("y", 25)
     .attr("x", divided/2)
-
+    .attr("font-size",()=>{
+          if(window.innerWidth<500){
+            return "10px";
+          }
+          })
      const xAxis = d3.axisBottom(xScale)
     canvas.append("g")
        .attr("transform", "translate(0," + (h-padding+5) + ")")
