@@ -89,6 +89,22 @@ module.exports = {
      })
     
   },
+    chartDelete: function(user, charts, callback){
+
+    mongo.MongoClient.connect(url, function(err,db){
+
+      db.collection("barCharts").update({user: user},
+                                        {$pull: {chart: {title: charts}}
+                                      })
+          db.collection("barCharts").findOne({user: user}, function(err,result){
+             
+            callback(JSON.stringify(result.chart));
+          })     
+
+
+    })
+
+  },
 
   randomButton: function(callback){
     mongo.MongoClient.connect(url,function(err,db){

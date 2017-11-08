@@ -23,6 +23,24 @@ input:focus {
   rect:hover{
     fill: #5a9164;
   }
+.miscBtn{
+  background-color:#9b9b9b;
+}
+  #popup{
+    border: 5px solid black;
+    margin-left: 20%;
+    position: fixed;
+    display: none;
+    z-index: 2;
+    width: 50%;
+    background-color: #994949;
+    box-shadow: 10px 10px 5px black;
+  }
+  .danger{
+    background-color: #994949;
+    padding: 10px;
+    border-radius: 10px;
+  }
 .radios{
 box-shadow: 10px 10px 5px #9b9b9b !important;
 }

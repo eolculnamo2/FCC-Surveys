@@ -217,6 +217,23 @@ user.randomButton(function(user,chart){
   }
 })
 });
+
+app.get("/deleter", function(req,res){
+  var stored = req.cookies.delete
+  console.log(stored)
+  var arr = stored.split(",")
+  var information = {
+    user: arr[0],
+    chart: arr[1]
+  }
+  console.log("Information: "+ information.chart)
+  user.chartDelete(information.user,information.chart, function(cooks){
+    console.log(cooks)
+    res.cookie("userData", cooks)
+    res.redirect("/mySurveys")
+  })
+ 
+});
 var listener = app.listen(3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
