@@ -206,6 +206,17 @@ else{
 }
 
 });
+
+app.get("/random", function(req,res){
+user.randomButton(function(user,chart){
+  if(user === null){
+    res.redirect("/random")
+  }
+  else{
+    res.redirect("/takesurvey/"+user+"+"+chart)
+  }
+})
+});
 var listener = app.listen(3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
