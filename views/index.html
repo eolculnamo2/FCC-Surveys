@@ -84,13 +84,14 @@ Notitia
       Password
     </h3>
           <input type ="password" name = "password">
-      </input>
-<input type="submit">
-</input>
-    </form>
-         <button className = "backButton" onClick ={()=>{this.setState({login:false,welcome:true})}}>
+      </input><br/>
+<button className ="homeBut" type="submit">Login
+</button>
+        <button type="button" className ="homeBut" onClick ={()=>{this.setState({login:false,welcome:true})}}>
             Back
-          </button>               
+          </button> 
+    </form>
+            
         </center>
         </div>
     )
@@ -117,13 +118,15 @@ Notitia
     Confirm Password
   </h3>
         <input type ="password" name = "passwordConfirm">
-      </input>
-<input type="submit">
-</input>
-    </form>
-          <button className = "backButton" onClick ={()=>{this.setState({register:false,welcome:true})}}>
+      </input><br/>
+<button className ="homeBut" type="submit">Register
+</button>         
+<button type="button" className ="homeBut" onClick ={()=>{this.setState({register:false,welcome:true})}}>
             Back
           </button>
+    </form>
+
+
         </center>
         </div>)
   },
