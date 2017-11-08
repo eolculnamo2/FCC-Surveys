@@ -89,15 +89,35 @@ module.exports = {
      })
     
   },
-/*
-  logout: function(info, callback){
+
+  randomButton: function(callback){
     mongo.MongoClient.connect(url,function(err,db){
-      db.collection('barCharts').findOne({user: info}, function(err,res){
-        callback(res.chart)
+      db.collection('barCharts').aggregate({$sample: {size:1}}, function(err,res){
+        //retrieves random username and chart name for random take survey link
+        var user = res[0].user
+        //Nested if to ensure the chart part of the JSON exists and has surveys
+        if(res[0]["chart"] !== undefined){
+            if(res[0]["chart"].length>0){
+        var randomNumber = Math.ceil((Math.random()*res[0].chart.length)-1);
+        var randomChart = res[0]["chart"][randomNumber]["title"]
+        var charted = randomChart.replace(" ","_")
+    callback(user,randomChart)
+         }
+        else{
+          console.log("empty")
+           callback(null,null)
+         }
+      }
+  else{
+          console.log("undefined")
+  callback(null,null)
+  }
+     
+   
       })
     })
   },
-*/
+
   changePassword: function(info, callback){
   
     mongo.MongoClient.connect(url, function(err,db){
