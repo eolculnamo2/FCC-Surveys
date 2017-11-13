@@ -2,7 +2,7 @@ var mongo = require('mongodb');
 var cookieParser = require('cookie-parser')
 //Plan: userInfo creates new data. Everthing else is update in order to add
 
-var url = "mongodb://eolculnamo2:ghost12@ds235785.mlab.com:35785/singletempo";
+var url = "mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PASS+"@ds235785.mlab.com:35785/singletempo";
 module.exports = {
     newChart: function(info, id, callback){
           mongo.MongoClient.connect(url,function(err,db){
