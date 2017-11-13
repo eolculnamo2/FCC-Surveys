@@ -8,8 +8,9 @@ var localStorage = require('localStorage')
 var app = express();
 //modules
 var user = require("./routes/authenticate")
-var url = "mongodb://eolculnamo2:ghost12@ds235785.mlab.com:35785/singletempo";
+var url = "mongodb://"+process.env.MONGO_USER+":"+process.env.MONGO_PASS+"@ds235785.mlab.com:35785/singletempo";
 
+console.log(process.env.TEST)
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
